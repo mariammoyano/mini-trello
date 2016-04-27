@@ -63,14 +63,6 @@ microTrelloAppControllers.controller('BoardCtrl', ['$scope', '$firebaseArray', f
 	// $scope.userArray = [new User("Aberford", "Ambledore"), new User("Barty", "Brouch"), new User("Charlie", "Cheesley")];
 	// $scope.cardArray = [new Card("card1", "this is card 1", 1, 1), new Card("card2", "this is card 2", 1, 2), new Card("card3", "this is card 3", 1, 3)];
 
-	function getById(id, array){
-		for(let element of array){
-			if(element.id === id){
-				return element;
-			}
-		}
-		return null;
-	}
 
 	function addState(state){
 		$scope.states.$add(state).then(function(ref) {
@@ -79,12 +71,29 @@ microTrelloAppControllers.controller('BoardCtrl', ['$scope', '$firebaseArray', f
 		});
 	}
 
-	function removeState(state){
+	function updateState(state){
+		$scope.states.$save(state).then(function(ref) {
+			console.log(`State "${ref.key()}" modified`);
+		});
+	}
+
+	this.removeState = function(state){
 		$scope.states.$remove(state).then(function(ref) {
 			console.log(`State "${ref.key()}" removed`);
-		}
-		
+		});
 	}
+
+	this.addState = function(){
+        if(this.addStateForm.$valid && this.newState !== {}){
+        	addState(this.newState);
+        }
+    }
+
+    this.resetFormState = function(){
+    	this.addStateForm.$setPristine();
+        this.addStateForm.$setUntouched();
+        this.newState = {};
+    }
 
 	
 }]);

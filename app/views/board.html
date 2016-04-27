@@ -1,15 +1,18 @@
 <h1>States</h1>
-{{stateArray}}
-{{userArray}}
-{{cardArray}}
-<div>
-	{{users}}
-	{{states}}
-	{{cards}}
-</div>
-<div ng-repeat="state in stateArray">
-	{{state.name}}
-	<div ng-repeat="card in cardArray | byId:[1,2,3]">
-		{{card.name}}
+<button ng-click="showForm = !showForm">Add State</button>
+<form name="bc.addStateForm" ng-submit='bc.addState();showForm = !showForm' ng-show="showForm" novalidate>
+    <div >
+        <span>Name: </span>
+        <input type="text" name="name" ng-model="bc.newState.name" required ng-model-options="{ updateOn: 'blur' }" >
+    </div>
+
+    <div >
+        <input type="submit" value="Add State" ng-disabled="bc.addStateForm.$invalid" />
+        <button ng-click="bc.resetFormState()">Reset</button>
+    </div>
+</form>
+<div class="columnContainer">		
+	<div class="column" ng-repeat="state in states">
+		{{state.name}} <button class="btnRemove" ng-click="bc.removeState(state)">X</button>
 	</div>
 </div>

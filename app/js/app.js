@@ -1,6 +1,6 @@
 'use strict'
 
-var microTrelloApp = angular.module('microTrelloApp', ['ngRoute','microTrelloAppControllers','microTrelloAppFilters']);
+var microTrelloApp = angular.module('microTrelloApp', ['firebase','ngRoute','microTrelloAppControllers','microTrelloAppFilters']);
 
 microTrelloApp.config(['$routeProvider',
   function($routeProvider) {
