@@ -1,0 +1,15 @@
+<h1>States</h1>
+{{stateArray}}
+{{userArray}}
+{{cardArray}}
+<div>
+	{{users}}
+	{{states}}
+	{{cards}}
+</div>
+<div ng-repeat="state in stateArray">
+	{{state.name}}
+	<div ng-repeat="card in cardArray | byId:[1,2,3]">
+		{{card.name}}
+	</div>
+</div>
