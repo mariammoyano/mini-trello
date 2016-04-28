@@ -1,6 +1,6 @@
 <h1>States</h1>
-<button ng-click="showForm = !showForm">Add State</button>
-<form name="bc.addStateForm" ng-submit='bc.addState();showForm = !showForm' ng-show="showForm" novalidate>
+<button ng-click='bc.toggleForm()'>Add State</button>
+<form name="bc.addStateForm" ng-submit='bc.addState();showForm = !showForm' ng-show="bc.showForm" novalidate>
     <div >
         <span>Name: </span>
         <input type="text" name="name" ng-model="bc.newState.name" required ng-model-options="{ updateOn: 'blur' }" >

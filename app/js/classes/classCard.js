@@ -1,24 +1,16 @@
-import { default as userContainer} from './objectUsersContainer.js';
-import { default as stateContainer} from './objectStatesContainer.js';
 
 class Card {
-	constructor(id = -1, name = "", description = "", state = false, user = false) {
-		this.id = id;
+	constructor(name = "", description = "", state = false, user = false) {
 		this.name = name;
-		this.description = "";
-		Object.assign(this, stateContainer.newContainer());		
-		Object.assign(this, userContainer.newContainer());		
+		this.description = description;
+		this.users = [];
 		if(state){
-			this.addState(state);			
+			this.state = state;
 		}
 		if(user){
-			this.addUser(user);			
+			this.users.push(user);			
 		}
 	}
-
-	get state () { return this.states[0] };
-
-	set state(newState) { this.states[0] = newState; };
 }
 
 export default Card;

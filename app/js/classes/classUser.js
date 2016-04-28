@@ -1,13 +1,9 @@
-import { default as cardContainer} from './objectCardsContainer.js';
-import { default as boardContainer} from './objectBoardsContainer.js';
 class User {
-	constructor(id, name, lastName){
-		this.id = id;
+	constructor(name, lastName){
 		this.name = name;
 		this.lastName = lastName;
-		let aux = cardContainer.newContainer();			
-		Object.assign(this, aux);
-		Object.assign(this, boardContainer.newContainer());
+		this.cards = [];			
+		this.boards = [];			
 	}
 }
 

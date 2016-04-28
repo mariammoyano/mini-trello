@@ -1,51 +1,16 @@
-'use strict';
+// 'use strict';
+import { default as servicesModuleName } from './services';
 
-class Board {
-	constructor(name){
-		this.name = name;
-		this.users = [];
-		this.states = [];
-	}
-}
-
-class Card {
-	constructor(name = "", description = "", state = false, user = false) {
-		this.name = name;
-		this.description = description;
-		this.users = [];
-		if(state){
-			this.state = state;
-		}
-		if(user){
-			this.users.push(user);			
-		}
-	}
-}
-
-class State {
-	constructor(name, id = -1){
-		this.name = name;
-		this.cards = [];
-	}
-}
-
-class User {
-	constructor(name, lastName){
-		this.name = name;
-		this.lastName = lastName;
-		this.cards = [];			
-		this.boards = [];			
-	}
-}
-
-// import { default as Board } from './js/classes/classBoard.js'
-// import { default as Card } from './js/classes/classCard.js'
-// import { default as State } from './js/classes/classState.js'
-// import { default as User } from './js/classes/classUser.js'
+import { default as Board } from './classes/classBoard.js'
+import { default as Card } from './classes/classCard.js'
+import { default as State } from './classes/classState.js'
+import { default as User } from './classes/classUser.js'
 
 /* Controllers */
 
-var microTrelloAppControllers = angular.module('microTrelloAppControllers', ['microTrelloAppServices','firebase']);
+var moduleName = 'microTrelloAppControllers';
+
+var microTrelloAppControllers = angular.module(moduleName, ['microTrelloAppServices','firebase']);
 
 microTrelloAppControllers.controller('BoardCtrl', ['$scope', '$firebaseArray', function($scope, $firebaseArray){
 
@@ -55,14 +20,6 @@ microTrelloAppControllers.controller('BoardCtrl', ['$scope', '$firebaseArray', f
   	$scope.users = $firebaseArray(refUsr);
   	$scope.states = $firebaseArray(refState);
   	$scope.cards = $firebaseArray(refCard);
-
-
-
-	// $scope.board = new Board("testBoard");
-	// $scope.stateArray = [new State("To Do"), new State("In Progress"), new State("Done"), new State("Cancelled")];
-	// $scope.userArray = [new User("Aberford", "Ambledore"), new User("Barty", "Brouch"), new User("Charlie", "Cheesley")];
-	// $scope.cardArray = [new Card("card1", "this is card 1", 1, 1), new Card("card2", "this is card 2", 1, 2), new Card("card3", "this is card 3", 1, 3)];
-
 
 	function addState(state){
 		$scope.states.$add(state).then(function(ref) {
@@ -92,8 +49,15 @@ microTrelloAppControllers.controller('BoardCtrl', ['$scope', '$firebaseArray', f
     this.resetFormState = function(){
     	this.addStateForm.$setPristine();
         this.addStateForm.$setUntouched();
-        this.newState = {};
+        this.newState = new State();
+    }
+
+    this.toggleForm = function(){
+    	this.showForm = !this.showForm;
+    	this.resetFormState();
     }
 
 	
 }]);
+
+export default moduleName;

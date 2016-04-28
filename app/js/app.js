@@ -1,6 +1,10 @@
-'use strict'
+import { default as controllersModuleName } from './controllers';
+import { default as servicesModuleName } from './services';
 
-var microTrelloApp = angular.module('microTrelloApp', ['firebase','ngRoute','microTrelloAppControllers','microTrelloAppFilters']);
+var moduleName = 'microTrelloApp';
+
+var microTrelloApp = angular.module(moduleName, ['firebase','ngRoute',controllersModuleName,servicesModuleName]);
+// var microTrelloApp = angular.module(moduleName, ['firebase','ngRoute','microTrelloAppControllers','microTrelloAppFilters']);
 
 microTrelloApp.config(['$routeProvider',
   function($routeProvider) {
@@ -13,3 +17,5 @@ microTrelloApp.config(['$routeProvider',
         redirectTo: '/'
       });
   }]);
+
+export default moduleName;

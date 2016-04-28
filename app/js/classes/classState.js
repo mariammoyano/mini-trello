@@ -1,9 +1,7 @@
-import { default as cardContainer} from './objectCardsContainer.js';
 class State {
-	constructor(id, name){
-		this.id = id;
+	constructor(name, id = -1){
 		this.name = name;
-		Object.assign(this, cardContainer.newContainer());
+		this.cards = ["a","b","c","d"];
 	}
 }
 
