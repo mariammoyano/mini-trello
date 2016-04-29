@@ -1,5 +1,5 @@
-import { default as controllersModuleName } from './controllers';
-import { default as servicesModuleName } from './services';
+import controllersModuleName from './controllers';
+import servicesModuleName from './services';
 
 var moduleName = 'microTrelloApp';
 

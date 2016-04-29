@@ -27,7 +27,7 @@ html, body {
 }
 
 .columnContainer {
-	height: 100%;
+	height: 80%;
 	overflow: auto;
 }
 

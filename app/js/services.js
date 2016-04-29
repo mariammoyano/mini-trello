@@ -1,4 +1,5 @@
 /* Services */
+import AngFireService from './Services/angfire.service'
 var moduleName = 'microTrelloAppServices';
 
 var microTrelloAppServices = angular.module(moduleName, []);
@@ -20,5 +21,7 @@ microTrelloAppServices.factory("LocalStorage", function($window, $rootScope) {
     }
   };
 });
+
+microTrelloAppServices.factory('angFireService', AngFireService.factory);
 
 export default moduleName;
