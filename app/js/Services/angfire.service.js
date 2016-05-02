@@ -8,12 +8,18 @@ class AngFireService {
 	  	this.users = $firebaseArray(this.refUsr);
 	  	this.states = $firebaseArray(this.refState);
 	  	this.cards = $firebaseArray(this.refCard);
+
+	 //  	this.refState.on("child_removed", function(snapshot) {
+		//   var deletedState = snapshot.val();
+		//   console.log(`The state named ${deletedState.name} has been deleted`);
+		// });
 	}
 
 	addState(state){
 		this.states.$add(state).then(function(ref) {
 		  var id = ref.key();
 		  state.id = id;
+		  console.log(`State "${ref.key()}"(${state.name}) added`);
 		});
 	}
 
@@ -25,7 +31,46 @@ class AngFireService {
 
 	removeState(state){
 		this.states.$remove(state).then(function(ref) {
-			console.log(`State "${ref.key()}" removed`);
+			//Use ref to retrieve name??
+			console.log(`State "${ref.key()}"(${state.name}) removed`);
+		});
+	}
+
+	addUser(user){
+		this.users.$add(user).then(function(ref) {
+		  var id = ref.key();
+		  user.id = id;
+		});
+	}
+
+	updateUser(user){
+		this.users.$save(user).then(function(ref) {
+			console.log(`User "${ref.key()}" modified`);
+		});
+	}
+
+	removeUser(user){
+		this.users.$remove(user).then(function(ref) {
+			console.log(`User "${ref.key()}" removed`);
+		});
+	}
+
+	addCard(card){
+		this.cards.$add(card).then(function(ref) {
+		  var id = ref.key();
+		  card.id = id;
+		});
+	}
+
+	updateCard(card){
+		this.cards.$save(card).then(function(ref) {
+			console.log(`Card "${ref.key()}" modified`);
+		});
+	}
+
+	removeCard(card){
+		this.cards.$remove(card).then(function(ref) {
+			console.log(`Card "${ref.key()}" removed`);
 		});
 	}
 

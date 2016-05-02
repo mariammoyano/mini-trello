@@ -1,7 +1,7 @@
-import Board from './classes/classBoard.js'
-import Card from './classes/classCard.js'
-import State from './classes/classState.js'
-import User from './classes/classUser.js'
+import Board from '../classes/classBoard.js'
+import Card from '../classes/classCard.js'
+import State from '../classes/classState.js'
+import User from '../classes/classUser.js'
 
 class BoardController {
 	constructor($scope, angFireService){
@@ -9,30 +9,31 @@ class BoardController {
 	  	$scope.users = angFireService.getAllUsers();
 	  	$scope.states = angFireService.getAllStates();
 	  	$scope.cards = angFireService.getAllCards();
+	  	this.angFireService = angFireService;
 
 	}
 
 	addState(state){
-		angFireService.addState(state);
+		this.angFireService.addState(state);
 	}
 
 	updateState(state){
-		angFireService.updateState(state);
+		this.angFireService.updateState(state);
 	}
 
 	removeState(state){
-		angFireService.removeState(state);
+		this.angFireService.removeState(state);
 	}
 
-	addState(){
-        if(this.addStateForm.$valid && this.newState !== {}){
-        	addState(this.newState);
+	addNewState(){
+        if(this.stateForm.$valid && this.newState !== {}){
+        	this.addState(this.newState);
         }
     }
 
     resetFormState(){
-    	this.addStateForm.$setPristine();
-        this.addStateForm.$setUntouched();
+    	this.stateForm.$setPristine();
+        this.stateForm.$setUntouched();
         this.newState = new State();
     }
 

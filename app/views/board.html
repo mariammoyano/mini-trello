@@ -1,6 +1,6 @@
 <h1>States</h1>
-<button ng-click='bc.toggleForm()'>Add State</button>
-<form name="bc.addStateForm" ng-submit='bc.addState();showForm = !showForm' ng-show="bc.showForm" novalidate>
+<button ng-click='bc.toggleForm()'>{{!bc.showForm == true ? 'Add State' : 'Cancel'}}</button>
+<!-- <form name="bc.stateForm" ng-submit='bc.addNewState();showForm = !showForm' ng-show="bc.showForm" novalidate>
     <div >
         <span>Name: </span>
         <input type="text" name="name" ng-model="bc.newState.name" required ng-model-options="{ updateOn: 'blur' }" >
@@ -10,9 +10,25 @@
         <input type="submit" value="Add State" ng-disabled="bc.addStateForm.$invalid" />
         <button ng-click="bc.resetFormState()">Reset</button>
     </div>
+</form> -->
+<form name="bc.stateForm" ng-submit='bc.addNewState();bc.showForm = !bc.showForm' ng-show="bc.showForm" novalidate>
+    <state-form state="bc.newState" form="bc.stateForm"></state-form>    
+
+    <div >
+        <input type="submit" value="Add State" ng-disabled="bc.stateForm.$invalid" />
+        <button ng-click="bc.resetFormState()">Reset</button>
+    </div>
 </form>
+
 <div class="columnContainer">		
 	<div class="column" ng-repeat="state in states">
 		{{state.name}} <button class="btnRemove" ng-click="bc.removeState(state)">X</button>
+       <!--  <button class="btnEdit" ng-click="bc.toggleEditForm()">*</button>
+        <form name="bc.editStateForm" ng-submit="bc.changeState()" ng-show="bc.showForm" novalidate>
+            <state-form state="bc.modState" form="bc.editStateForm"></state-form>
+            <input type="submit" value="Save" ng-disabled="bc.editStateForm.$invalid" />
+            <button ng-click="bc.cancelEdit()">Cancel</button>
+        </form> -->
+        
 	</div>
 </div>
