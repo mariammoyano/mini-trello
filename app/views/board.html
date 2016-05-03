@@ -23,6 +23,7 @@
 <div class="columnContainer">		
 	<div class="column" ng-repeat="state in states">
 		{{state.name}} <button class="btnRemove" ng-click="bc.removeState(state)">X</button>
+        <state-edit state="state" action="bc.updateState(state)"></state-edit>
        <!--  <button class="btnEdit" ng-click="bc.toggleEditForm()">*</button>
         <form name="bc.editStateForm" ng-submit="bc.changeState()" ng-show="bc.showForm" novalidate>
             <state-form state="bc.modState" form="bc.editStateForm"></state-form>

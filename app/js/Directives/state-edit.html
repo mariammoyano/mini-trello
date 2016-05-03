@@ -1,0 +1,9 @@
+ <button class="btnEdit" ng-click="toggleEdit()">*</button>
+	<form name="editStateForm" ng-show="editing" novalidate>
+
+    <state-form state="editState" form="editStateForm"></state-form>
+
+    <input type="button" value="Save" ng-disabled="editStateForm.$invalid" ng-click="saveState()" />
+    <button ng-click="reset()">Reset</button>
+    <button ng-click="cancelEdit()">Cancel</button>
+</form>
