@@ -10,7 +10,9 @@ class BoardController {
 	  	$scope.states = angFireService.getAllStates();
 	  	$scope.cards = angFireService.getAllCards();
 	  	this.angFireService = angFireService;
-
+	  	this.newState = new State();
+	  	this.newCard = new Card();
+	  	this.testCards = this.getCardsForState("-KGwuQ0EjUCj7JlsP7PS");
 	}
 
 	addState(state){
@@ -25,22 +27,15 @@ class BoardController {
 		this.angFireService.removeState(state);
 	}
 
-	addNewState(){
-        if(this.stateForm.$valid && this.newState !== {}){
-        	this.addState(this.newState);
-        }
-    }
+	addCard(card, parentStateId){
+		// card.state = {};
+		card.state[parentStateId] = true;
+		this.angFireService.addCard(card, parentStateId);
+	}
 
-    resetFormState(){
-    	this.stateForm.$setPristine();
-        this.stateForm.$setUntouched();
-        this.newState = new State();
-    }
-
-    toggleForm(){
-    	this.showForm = !this.showForm;
-    	this.resetFormState();
-    }
+	getCardsForState(stateId){
+		this.angFireService.getCardsForState(stateId);
+	}
 }
 
 

@@ -2,8 +2,8 @@ class User {
 	constructor(name, lastName){
 		this.name = name;
 		this.lastName = lastName;
-		this.cards = [];			
-		this.boards = [];			
+		this.cards = {};			
+		this.boards = {};			
 	}
 }
 

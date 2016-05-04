@@ -8,6 +8,7 @@ class AngFireService {
 	  	this.users = $firebaseArray(this.refUsr);
 	  	this.states = $firebaseArray(this.refState);
 	  	this.cards = $firebaseArray(this.refCard);
+	  	this.$firebaseArray = $firebaseArray;
 
 	 //  	this.refState.on("child_removed", function(snapshot) {
 		//   var deletedState = snapshot.val();
@@ -55,11 +56,21 @@ class AngFireService {
 		});
 	}
 
-	addCard(card){
+	addCard(card, parentState){
+		let self = this;
 		this.cards.$add(card).then(function(ref) {
-		  var id = ref.key();
-		  card.id = id;
-		});
+			var id = ref.key();
+			card.id = id;
+			self.refState.child(`${parentState}/cards/${id}`).set(true);
+		})
+	}
+
+	getCardsForState(stateId){
+		this.refCard.orderByKey().on("value", function(snapshot) {
+			  snapshot.forEach(function(data) {
+			    console.log("Card " + data.key());
+			  })});
+		// ref.orderByChild("height").equalTo(25);
 	}
 
 	updateCard(card){

@@ -1,8 +1,8 @@
 class Board {
 	constructor(name){
 		this.name = name;
-		this.users = [];
-		this.states = [];
+		this.users = {};
+		this.states = {};
 	}
 }
 
