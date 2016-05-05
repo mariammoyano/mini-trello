@@ -66,11 +66,10 @@ class AngFireService {
 	}
 
 	getCardsForState(stateId){
-		this.refCard.orderByKey().on("value", function(snapshot) {
-			  snapshot.forEach(function(data) {
-			    console.log("Card " + data.key());
-			  })});
-		// ref.orderByChild("height").equalTo(25);
+		//Use this or filters or ng-show???
+		var query = this.refCard.orderByChild(`state/${stateId}`).equalTo(true);
+		var list = this.$firebaseArray(query);
+		return list;
 	}
 
 	updateCard(card){

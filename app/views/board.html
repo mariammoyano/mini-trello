@@ -25,9 +25,10 @@
         
             <card-form card="$parent.editModel">
         </custom-edit>
-        <!-- <div class="card" ng-repeat="card in testCards">
-            {{card.name}}
-        </div> -->
+        <div class="card" ng-repeat="card in cards" ng-if="card.state[state.$id]">
+            <li>{{card.name}}({{card.$id}})</li>
+            <pre>   {{card.description}}</pre>
+        </div>
         
 	</div>
 </div>

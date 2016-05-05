@@ -12,7 +12,6 @@ class BoardController {
 	  	this.angFireService = angFireService;
 	  	this.newState = new State();
 	  	this.newCard = new Card();
-	  	this.testCards = this.getCardsForState("-KGwuQ0EjUCj7JlsP7PS");
 	}
 
 	addState(state){
@@ -33,9 +32,6 @@ class BoardController {
 		this.angFireService.addCard(card, parentStateId);
 	}
 
-	getCardsForState(stateId){
-		this.angFireService.getCardsForState(stateId);
-	}
 }
 
 
