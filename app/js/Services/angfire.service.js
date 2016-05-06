@@ -67,15 +67,30 @@ class AngFireService {
 
 	getCardsForState(stateId){
 		//Use this or filters or ng-show???
+		var self = this;
 		var query = this.refCard.orderByChild(`state/${stateId}`).equalTo(true);
+		query.on("child_added",function(snapshot){
+			console.log(snapshot.key());
+		});
+		query.on("child_changed", function(snapshot){
+			console.log("thing changed");
+			var name = Object.getOwnPropertyNames(snapshot.val().state)[0];
+			console.log(`${snapshot.key()}: ${snapshot.val().state}`);
+			var state = self.refState.child(name);
+			state.cards[snapshot.key()] = true;
+		});
 		var list = this.$firebaseArray(query);
 		return list;
 	}
 
-	updateCard(card){
-		this.cards.$save(card).then(function(ref) {
+	updateCard(card, fireArray){
+		fireArray.$save(card).then(function(ref) {
 			console.log(`Card "${ref.key()}" modified`);
-		});
+			//TODO update state referencing card
+		},
+		function(err){
+			console.log(err);
+		});		
 	}
 
 	removeCard(card){

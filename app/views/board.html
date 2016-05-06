@@ -1,7 +1,7 @@
 <h1>States</h1>
 <!-- <button ng-click='bc.toggleForm()'>{{!bc.showForm == true ? 'Add State' : 'Cancel'}}</button>
 <form name="bc.stateForm" ng-submit='bc.addNewState();bc.showForm = !bc.showForm' ng-show="bc.showForm" novalidate>
-    <state-form state="bc.newState" form="bc.stateForm"></state-form>    
+    <input-group card="bc.newState" form= element-type="state" "bc.stateForm"/>    
 
     <div >
         <input type="submit" value="Add State" ng-disabled="bc.stateForm.$invalid" />
@@ -9,25 +9,43 @@
     </div>
 </form> -->
 <br>
-<custom-edit value="New" model="bc.newState" action="bc.addState(bc.newState)" action-type="add">
-    <state-form state="$parent.editModel"></state-form>
-</custom-edit>
+<editable-content value="New" model="bc.newState" action="bc.addState(bc.newState)" action-type="add">
+    <content-edit>
+        <input-group editable="$parent.editModel" element-type="state" />
+    </content-edit>
+</editable-content>
 
 <div class="columnContainer">		
-	<div class="column" ng-repeat="state in states">
-		{{state.name}} 
-        <button class="btnRemove" ng-click="bc.removeState(state)">X</button>
-        <custom-edit value="*" model="state" action="bc.updateState(state)" action-type="edit">
-            <!-- TODO: temporary fix, find a way to not use $parent -->
-            <state-form state="$parent.editModel"/>
-        </custom-edit>
-        <custom-edit value="New Card" model="bc.newCard" action="bc.addCard(bc.newCard, state.$id)" action-type="add">
+    <div class="column" ng-repeat="state in states" ng-init="stateCards = bc.getCardsForState(state.$id)">
         
-            <card-form card="$parent.editModel">
-        </custom-edit>
-        <div class="card" ng-repeat="card in cards" ng-if="card.state[state.$id]">
-            <li>{{card.name}}({{card.$id}})</li>
-            <pre>   {{card.description}}</pre>
+        
+        <editable-content value="&#9881" model="state" action="bc.updateState(state)" action-type="edit">
+            <!-- TODO: temporary fix, find a way to not use $parent -->
+            <content-view>
+                <button class="btnRemove" ng-click="bc.removeState(state)">X</button>
+                <br>
+                {{state.name}} 
+            </content-view>
+            <content-edit>
+                <input-group editable="$parent.editModel" element-type="state" />
+            </content-edit>
+        </editable-content>
+        <editable-content value="New Card" model="bc.newCard" action="bc.addCard(bc.newCard, state.$id)" action-type="add">      
+            <content-edit>
+                <input-group editable="$parent.editModel" element-type="card">
+            </content-edit>  
+
+        </editable-content>
+        <div class="card" ng-repeat="card in stateCards" >
+            <editable-content value="&#9881" model="card" action="bc.updateCard(card, stateCards)" action-type="edit">
+                <content-view>
+                    <li>{{card.name}}</li>
+                    <pre>   {{card.description}}</pre>
+                </content-view>
+                <content-edit>
+                    <input-group editable="$parent.editModel" element-type="card" />
+                </content-edit>
+            </editable-content>
         </div>
         
 	</div>

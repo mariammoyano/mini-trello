@@ -32,6 +32,14 @@ class BoardController {
 		this.angFireService.addCard(card, parentStateId);
 	}
 
+	updateCard(card, fireArray){
+		this.angFireService.updateCard(card, fireArray);
+	}
+
+	getCardsForState(stateId){
+		return this.angFireService.getCardsForState(stateId);
+	}
+
 }
 
 

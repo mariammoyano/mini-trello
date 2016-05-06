@@ -2,8 +2,8 @@
 import servicesModuleName from './services';
 import BoardCtrl from './Controllers/board.controller';
 import stateForm from './Directives/state-form.directive';
-import cardForm from './Directives/card-form.directive';
-import customEdit from './Directives/custom-edit.directive';
+import inputGroup from './Directives/input-group.directive';
+import editableContent from './Directives/editable-content.directive';
 
 /* Controllers */
 
@@ -15,8 +15,8 @@ microTrelloAppControllers.controller('BoardCtrl', BoardCtrl);
 
 microTrelloAppControllers.directive('stateForm', stateForm);
 
-microTrelloAppControllers.directive('cardForm', cardForm);
+microTrelloAppControllers.directive('inputGroup', inputGroup);
 
-microTrelloAppControllers.directive('customEdit', customEdit);
+microTrelloAppControllers.directive('editableContent', editableContent);
 
 export default moduleName;

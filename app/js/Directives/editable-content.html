@@ -1,9 +1,10 @@
  <button class="btnEdit" ng-click="toggleEdit()">{{value}}</button>
+ 	<div ng-transclude="view" ng-show="!editing"></div>
 	<form name="editAnythingForm" ng-show="editing" novalidate>
 	<!-- Action = {{editing}} -->
     <!-- <state-form state="editState" form="editAnythingForm"></state-form> -->
     <!-- inside this div will be the form content (transcluded from child element)-->
-    <ng-transclude></ng-transclude>
+    <div ng-transclude="edit"></div>
 
     <input type="button" value="{{okValue}}" ng-disabled="editAnythingForm.$invalid" ng-click="saveChanges()" />
     <button ng-click="reset()">Reset</button>

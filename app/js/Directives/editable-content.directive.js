@@ -1,8 +1,12 @@
 
-function customEdit() {
+function editableContent() {
     return{
     	restrict: 'AE',
-    	transclude:true,
+    	// transclude:true,
+        transclude: {
+            'view': '?contentView',
+            'edit': '?contentEdit'
+        },
     	scope: {
     		form: '=',
     		model: '=',
@@ -21,18 +25,24 @@ function customEdit() {
                 default:
                     $scope.okValue = 'Ok';
             }
+            $scope.init = function(){
+                $scope.masterModel = angular.copy($scope.model)
+                $scope.editModel = angular.copy($scope.model);               
+            };
+            $scope.init();
 
-	        $scope.masterModel = angular.copy($scope.model)
-			$scope.editModel = angular.copy($scope.model);
-			$scope.toggleEdit = function(){
-				$scope.editing = !$scope.editing;
-			};
-			$scope.saveChanges = function(){
-				angular.copy($scope.editModel, $scope.model);
-				$scope.action();
-				this.cancel();
-			};
-			$scope.reset = function(){
+            $scope.toggleEdit = function(){
+                $scope.editing = !$scope.editing;
+            };
+            $scope.saveChanges = function(){
+                angular.copy($scope.editModel, $scope.model);
+                if($scope.actionType !== 'add'){
+                    $scope.masterModel = angular.copy($scope.model);
+                }
+                $scope.action();
+                this.cancel();
+            };
+            $scope.reset = function(){
 				angular.copy($scope.masterModel, $scope.editModel);
 			}
 			$scope.cancel = function(){
@@ -61,9 +71,9 @@ function customEdit() {
     	// 		// scope.editing = false;
     	// 	}
     	// },
-    	templateUrl: "/app/js/Directives/custom-edit.html"
+    	templateUrl: "/app/js/Directives/editable-content.html"
     }
 
 }
 
-export default customEdit;
+export default editableContent;
