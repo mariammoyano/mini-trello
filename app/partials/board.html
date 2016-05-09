@@ -11,7 +11,7 @@
 <br>
 <editable-content value="New" model="bc.newState" action="bc.addState(bc.newState)" action-type="add">
     <content-edit>
-        <input-group editable="$parent.editModel" element-type="state" />
+        <input-group element-type="state" />
     </content-edit>
 </editable-content>
 
@@ -27,23 +27,30 @@
                 {{state.name}} 
             </content-view>
             <content-edit>
-                <input-group editable="$parent.editModel" element-type="state" />
+                <input-group element-type="state" />
             </content-edit>
         </editable-content>
         <editable-content value="New Card" model="bc.newCard" action="bc.addCard(bc.newCard, state.$id)" action-type="add">      
             <content-edit>
-                <input-group editable="$parent.editModel" element-type="card">
+                <input-group element-type="card">
             </content-edit>  
 
         </editable-content>
         <div class="card" ng-repeat="card in stateCards" >
-            <editable-content value="&#9881" model="card" action="bc.updateCard(card, stateCards)" action-type="edit">
+            <editable-content value="&#9881" model="card" action="bc.updateCard(card)" action-type="edit">
                 <content-view>
-                    <li>{{card.name}}</li>
-                    <pre>   {{card.description}}</pre>
+                <button class="btnRemove" ng-click="bc.removeCard(card)">X</button>
+                    <div>
+                        <div class="name">
+                            {{card.name}}   
+                        </div>
+                        <div class="description">
+                            {{card.description}}
+                        </div>
+                    </div>
                 </content-view>
                 <content-edit>
-                    <input-group editable="$parent.editModel" element-type="card" />
+                    <input-group element-type="card" states="states" />
                 </content-edit>
             </editable-content>
         </div>

@@ -2,17 +2,19 @@
 function inputGroup() {
     return{
     	restrict: 'AE',
+        require: '^^editableContent',
     	scope: {
-    		editable: '=',
-    		elementType: '@'
+    		elementType: '@',
+            states: '='
     	},
-    	link: function(scope){
+    	link: function(scope, element, attrs, parentCtrl){
+            scope.editable = parentCtrl.editable;
     		scope.getTemplate = function(){
     			switch(scope.elementType){
     				case "card":
-    					return "/app/js/Directives/card-form.html";
+    					return "/app/partials/card-form.html";
     				case "state":
-    					return "/app/js/Directives/state-form.html";
+    					return "/app/partials/state-form.html";
     			}
     		}
     	},

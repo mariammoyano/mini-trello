@@ -14,7 +14,8 @@ function editableContent() {
     		actionType: '@',
     		value: '@'
     	},
-	    link: function($scope) {
+	    controller: function($scope) {
+            let ctrl = this;
 	    	switch($scope.actionType) {
 			    case 'edit':
 			        $scope.okValue = 'Save';
@@ -26,8 +27,9 @@ function editableContent() {
                     $scope.okValue = 'Ok';
             }
             $scope.init = function(){
-                $scope.masterModel = angular.copy($scope.model)
-                $scope.editModel = angular.copy($scope.model);               
+                $scope.masterModel = angular.copy($scope.model);
+                $scope.editModel = angular.copy($scope.model);  
+                ctrl.editable = $scope.editModel;             
             };
             $scope.init();
 
@@ -49,6 +51,7 @@ function editableContent() {
 				$scope.reset();
 				this.toggleEdit();
 			}
+            
 	      
 	    },
     	//TODO: move link function

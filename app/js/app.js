@@ -10,7 +10,7 @@ microTrelloApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'views/board.html',
+        templateUrl: 'partials/board.html',
         controller: 'BoardCtrl as bc'
       }).
       otherwise({

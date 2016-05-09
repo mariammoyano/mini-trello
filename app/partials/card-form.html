@@ -1,0 +1,9 @@
+<div >
+    <label for "name" hidden >Title: </label>
+    <input class="name" type="text" name="name" ng-model="editable.name" placeholder="Title" required ng-model-options="{ updateOn: 'blur' }" >
+    <label for "description" hidden >Description: </label>
+    <input class="description" type="text" name="description" ng-model="editable.description" placeholder="Description" >
+    <select ng-options="state as state.name for state in states" ng-model="selectedState"></select>
+</div>
+
+

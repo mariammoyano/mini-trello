@@ -10,6 +10,16 @@ class AngFireService {
 	  	this.cards = $firebaseArray(this.refCard);
 	  	this.$firebaseArray = $firebaseArray;
 
+	  	this.refCard.on("child_changed", function(snapshot) {
+		  var changedCard = snapshot.val();
+		  console.log(`Card ${changedCard.name} changed`);
+		});
+
+	  	this.refCard.on("child_removed", function(snapshot) {
+		  var changedCard = snapshot.val();
+		  console.log(`Card ${changedCard.name} removed`);		  
+		});
+
 	 //  	this.refState.on("child_removed", function(snapshot) {
 		//   var deletedState = snapshot.val();
 		//   console.log(`The state named ${deletedState.name} has been deleted`);
@@ -69,24 +79,31 @@ class AngFireService {
 		//Use this or filters or ng-show???
 		var self = this;
 		var query = this.refCard.orderByChild(`state/${stateId}`).equalTo(true);
-		query.on("child_added",function(snapshot){
-			console.log(snapshot.key());
-		});
-		query.on("child_changed", function(snapshot){
-			console.log("thing changed");
-			var name = Object.getOwnPropertyNames(snapshot.val().state)[0];
-			console.log(`${snapshot.key()}: ${snapshot.val().state}`);
-			var state = self.refState.child(name);
-			state.cards[snapshot.key()] = true;
-		});
+		// query.on("child_added",function(snapshot){
+		// 	console.log(`Card ${snapshot.key()} added`);
+		// });
+		// query.on("child_changed", function(snapshot){
+		// 	console.log("card changed");
+		// 	var name = Object.getOwnPropertyNames(snapshot.val().state)[0];
+		// 	// console.log(`${snapshot.key()}: ${snapshot.val().state}`);
+		// 	var state = self.refState.child(name);
+		// 	if(!state.cards){ state.cards = {}; }
+		// 	state.cards[snapshot.key()] = true;
+		// });
+		// query.on("child_removed", function(snapshot){
+		// 	console.log("card removed");
+		// });
 		var list = this.$firebaseArray(query);
 		return list;
 	}
 
-	updateCard(card, fireArray){
-		fireArray.$save(card).then(function(ref) {
+	updateCard(card){
+		let self = this;
+		let index = this.cards.$indexFor(card.$id); 
+		this.cards[index] = card;
+		this.cards.$save(index).then(function(ref){
 			console.log(`Card "${ref.key()}" modified`);
-			//TODO update state referencing card
+			
 		},
 		function(err){
 			console.log(err);
@@ -94,8 +111,12 @@ class AngFireService {
 	}
 
 	removeCard(card){
-		this.cards.$remove(card).then(function(ref) {
+		let self = this;
+		this.cards.$remove(this.cards.$indexFor(card.$id)).then(function(ref) {
 			console.log(`Card "${ref.key()}" removed`);
+			let stateId = Object.getOwnPropertyNames(card.state)[0];//use child??
+			self.getState(`${stateId}`).child(`cards/${card.$id}`).remove();
+			console.log(`Card "${ref.key()}" reference removed from state`);
 		});
 	}
 
@@ -109,6 +130,10 @@ class AngFireService {
 
 	getAllCards(){
 		return this.cards;
+	}
+
+	getState(id){
+		return this.refState.child(id);
 	}
 
 	static factory($firebaseArray){
