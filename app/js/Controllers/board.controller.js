@@ -44,6 +44,18 @@ class BoardController {
 		return this.angFireService.getCardsForState(stateId);
 	}
 
+	addUser(user){
+		this.angFireService.addUser(user);
+	}
+
+	updateUser(user){
+		this.angFireService.updateUser(user);
+	}
+
+	removeUser(user){
+		this.angFireService.removeUser(user);
+	}
+
 }
 
 

@@ -12,7 +12,8 @@ function editableContent() {
     		model: '=',
     		action: '&',
     		actionType: '@',
-    		value: '@'
+    		value: '@',
+            editing: '@'
     	},
 	    controller: function($scope) {
             let ctrl = this;
@@ -29,7 +30,8 @@ function editableContent() {
             $scope.init = function(){
                 $scope.masterModel = angular.copy($scope.model);
                 $scope.editModel = angular.copy($scope.model);  
-                ctrl.editable = $scope.editModel;             
+                $scope.resetCallbacks = [];
+                ctrl.editable = $scope.editModel; 
             };
             $scope.init();
 
@@ -46,11 +48,17 @@ function editableContent() {
             };
             $scope.reset = function(){
 				angular.copy($scope.masterModel, $scope.editModel);
+                for(let callback of $scope.resetCallbacks){
+                    callback();
+                }
 			}
 			$scope.cancel = function(){
 				$scope.reset();
 				this.toggleEdit();
 			}
+            ctrl.onReset = function(cb){
+                $scope.resetCallbacks.push(cb);
+            }
             
 	      
 	    },

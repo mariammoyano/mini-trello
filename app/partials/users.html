@@ -1,0 +1,28 @@
+<h1>Users</h1>
+
+<editable-content value="New User" model="uc.newState" action="uc.addUser(uc.newState)" action-type="add">
+    <content-edit>
+        <input-group element-type="user" />
+    </content-edit>
+</editable-content>
+
+<div class="usersContainer">		
+    <div class="row" ng-repeat="user in users">
+        
+        <editable-content value="&#9881" model="user" action="uc.updateUser(user)" action-type="edit">
+            <content-view>
+                <button class="btnRemove" ng-click="uc.removeUser(user)">X</button>
+                <br>
+                {{user.username}} 
+                {{user.name}} 
+                {{user.lastname}} 
+                {{user.email}} 
+            </content-view>
+            <content-edit>
+                <input-group element-type="user" />
+            </content-edit>
+        </editable-content>
+        
+        
+	</div>
+</div>

@@ -13,6 +13,10 @@ microTrelloApp.config(['$routeProvider',
         templateUrl: 'partials/board.html',
         controller: 'BoardCtrl as bc'
       }).
+      when('/users', {
+        templateUrl: 'partials/users.html',
+        controller: 'BoardCtrl as uc'
+      }).
       otherwise({
         redirectTo: '/'
       });

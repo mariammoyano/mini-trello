@@ -55,13 +55,20 @@ class AngFireService {
 	}
 
 	updateUser(user){
-		this.users.$save(user).then(function(ref) {
+		let index = this.users.$indexFor(user.$id); 
+		this.users[index] = user;
+
+		this.users.$save(index).then(function(ref){
 			console.log(`User "${ref.key()}" modified`);
-		});
+		},
+		function(err){
+			console.log(err);
+		});	
 	}
 
 	removeUser(user){
-		this.users.$remove(user).then(function(ref) {
+		let index = this.users.$indexFor(user.$id);
+		this.users.$remove(index).then(function(ref) {
 			console.log(`User "${ref.key()}" removed`);
 		});
 	}
@@ -99,11 +106,16 @@ class AngFireService {
 
 	updateCard(card){
 		let self = this;
-		let index = this.cards.$indexFor(card.$id); 
-		this.cards[index] = card;
-		this.cards.$save(index).then(function(ref){
+		let index = self.cards.$indexFor(card.$id); 
+		let oldState = self.getCardStateId(self.cards[index]);
+		let newState = self.getCardStateId(card);
+		self.cards[index] = card;
+		self.cards.$save(index).then(function(ref){
 			console.log(`Card "${ref.key()}" modified`);
-			
+			if(oldState !== newState){
+				self.refState.child(`${oldState}/cards/${card.$id}`).remove();
+				self.refState.child(`${newState}/cards/${card.$id}`).set(true);
+			}
 		},
 		function(err){
 			console.log(err);
@@ -114,7 +126,7 @@ class AngFireService {
 		let self = this;
 		this.cards.$remove(this.cards.$indexFor(card.$id)).then(function(ref) {
 			console.log(`Card "${ref.key()}" removed`);
-			let stateId = Object.getOwnPropertyNames(card.state)[0];//use child??
+			let stateId = self.getCardStateId(card);//use child??
 			self.getState(`${stateId}`).child(`cards/${card.$id}`).remove();
 			console.log(`Card "${ref.key()}" reference removed from state`);
 		});
@@ -130,6 +142,10 @@ class AngFireService {
 
 	getAllCards(){
 		return this.cards;
+	}
+
+	getCardStateId(card){
+		return Object.getOwnPropertyNames(card.state)[0];
 	}
 
 	getState(id){
