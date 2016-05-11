@@ -3,5 +3,10 @@
     <input class="name" type="text" name="name" ng-model="editable.name" placeholder="Title" required ng-model-options="{ updateOn: 'blur' }" >
     <label for "description" hidden >Description: </label>
     <input class="description" type="text" name="description" ng-model="editable.description" placeholder="Description" >
-    <select ng-model="selects.selectedState" ng-options="state.$id as state.name for state in states" ng-change="changeState()"></select>
+    <label for "state" hidden>State:</label>
+    <select ng-if="actionType !== new" name="state" ng-model="selects.selectedState" ng-options="state.$id as state.name for state in states" ng-change="changeState()"></select>
+
+    <label for "users" hidden>Users:</label>
+    <select name="users"></select>
+
 </div>

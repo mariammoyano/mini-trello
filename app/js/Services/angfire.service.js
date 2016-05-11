@@ -1,11 +1,11 @@
 class AngFireService {
 	constructor($firebaseArray){
 		this.baseUrl = "https://microtrello.firebaseio.com/"
-		this.refUsr = new Firebase(`${this.baseUrl}users`);
+		this.refUser = new Firebase(`${this.baseUrl}users`);
 		this.refState = new Firebase(`${this.baseUrl}states`);
 		this.refCard = new Firebase(`${this.baseUrl}cards`);
 		
-	  	this.users = $firebaseArray(this.refUsr);
+	  	this.users = $firebaseArray(this.refUser);
 	  	this.states = $firebaseArray(this.refState);
 	  	this.cards = $firebaseArray(this.refCard);
 	  	this.$firebaseArray = $firebaseArray;
@@ -110,6 +110,10 @@ class AngFireService {
 		let oldState = self.getCardStateId(self.cards[index]);
 		let newState = self.getCardStateId(card);
 		self.cards[index] = card;
+
+		
+		self.updateCardUsers(card);
+
 		self.cards.$save(index).then(function(ref){
 			console.log(`Card "${ref.key()}" modified`);
 			if(oldState !== newState){
@@ -150,6 +154,23 @@ class AngFireService {
 
 	getState(id){
 		return this.refState.child(id);
+	}
+
+	//TODO change name
+	getUserCardChild(userId, cardId){
+		return this.refUser.child(`${userId}/cards/${cardId}`);
+	}
+
+	updateCardUsers(card){
+		for(let userName of Object.getOwnPropertyNames(card.users)){
+			console.log(`${userName}: ${card.users[userName]}`);
+			if(card.users[userName]){
+				this.getUserCardChild(userName, card.$id).set(true);
+			} else {
+				this.getUserCardChild(userName, card.$id).remove();
+				delete card.users[userName];
+			}
+		}
 	}
 
 	static factory($firebaseArray){

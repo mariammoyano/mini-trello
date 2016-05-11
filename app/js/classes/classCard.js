@@ -5,12 +5,12 @@ class Card {
 		this.description = description;
 		this.users = {};
 		this.state = {};
-		if(state){
-			this.state = state;
-		}
-		if(user){
-			this.users.push(user);			
-		}
+		// if(state){
+		// 	this.state[state] = true;
+		// }
+		// if(user){
+		// 	this.users[user] = true;			
+		// }
 	}
 }
 
